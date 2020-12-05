@@ -52,7 +52,6 @@ class Day04PartA(Day04, FileReaderSolution):
 class Day04PartB(Day04, FileReaderSolution):
 
     def is_valid_passport(self, passport: str):
-
         if not self.are_all_field_present(passport):
             return False
 
