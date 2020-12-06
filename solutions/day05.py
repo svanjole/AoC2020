@@ -1,43 +1,43 @@
 from utils.abstract import FileReaderSolution
-import re
+
 
 class Passport:
     row: int
     col: int
     id: int
 
-    def __init__(self, input: str):
+    def __init__(self, input_data: str):
         self.row = 0
         self.col = 0
         self.id = 0
 
-        self.parse(input)
+        self.parse(input_data)
 
-    def parse(self, input: str):
-        rowlower = 0
-        rowupper = 127
+    def parse(self, input_data: str):
+        row_lower = 0
+        row_upper = 127
 
-        collower = 0
-        colupper = 7
+        col_lower = 0
+        col_upper = 7
 
-        for l in input:
-            if l == "F":
-                rowupper -= (rowupper - rowlower + 1) / 2
-            elif l == "B":
-                rowlower += (rowupper - rowlower + 1) / 2
-            elif l == "R":
-                collower += (colupper - collower + 1) / 2
-            elif l == "L":
-                colupper -= (colupper - collower + 1) / 2
+        for letter in input_data:
+            if letter == "F":
+                row_upper -= (row_upper - row_lower + 1) / 2
+            elif letter == "B":
+                row_lower += (row_upper - row_lower + 1) / 2
+            elif letter == "R":
+                col_lower += (col_upper - col_lower + 1) / 2
+            elif letter == "L":
+                col_upper -= (col_upper - col_lower + 1) / 2
 
-        if rowlower != rowupper:
+        if row_lower != row_upper:
             raise ValueError
 
-        if collower != colupper:
+        if col_lower != col_upper:
             raise ValueError
 
-        self.row = int(rowupper)
-        self.col = int(colupper)
+        self.row = int(row_upper)
+        self.col = int(col_upper)
 
         self.id = self.row * 8 + self.col
 
