@@ -48,3 +48,19 @@ class Day09PartB(Day09, FileReaderSolution):
                     break
 
         return []
+
+
+class Day09PartExampleA(Day09PartA, FileReaderSolution):
+    def solve(self, input_data: str) -> int:
+        list_of_numbers = list(map(lambda x: int(x), input_data.split("\n")))
+
+        return self.find_anomaly(list_of_numbers, 5)
+
+
+class Day09PartExampleB(Day09PartB, FileReaderSolution):
+    def solve(self, input_data: str) -> int:
+        list_of_numbers = list(map(lambda x: int(x), input_data.split("\n")))
+        anomaly = self.find_anomaly(list_of_numbers, 5)
+        subset = self.find_set(list_of_numbers, anomaly)
+
+        return min(subset) + max(subset)

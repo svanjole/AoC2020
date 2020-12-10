@@ -7,6 +7,8 @@ import click
 @click.argument("day", type=click.IntRange(1, 25))
 @click.option("--parta", "part", flag_value="a")
 @click.option("--partb", "part", flag_value="b")
+@click.option("--parte_a", "part", flag_value="ea")
+@click.option("--parte_b", "part", flag_value="eb")
 def main(day, part):
     day = f"{int(day):02}"
     import_path = f"solutions.day{day}"
@@ -27,6 +29,12 @@ def run_day(data_path, day, day_module, part):
         return run_part(data_path, day, day_module, "A")
     elif part == "b":
         return run_part(data_path, day, day_module, "B")
+    elif part == "ea":
+        data_path = "example_" + data_path
+        return run_part(data_path, day, day_module, "ExampleA")
+    elif part == "eb":
+        data_path = "example_" + data_path
+        return run_part(data_path, day, day_module, "ExampleB")
     else:
         a = run_part(data_path, day, day_module, "A")
         b = run_part(data_path, day, day_module, "B")
@@ -36,6 +44,7 @@ def run_day(data_path, day, day_module, part):
 
 def run_part(data_path, day, day_module, part):
     result = getattr(day_module, f"Day{day}Part{part}")()(data_path)
+
     return result
 
 
