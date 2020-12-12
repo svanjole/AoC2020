@@ -16,8 +16,12 @@ class Day12:
         self.waypoint['East'] = 10
         self.waypoint['North'] = 1
 
+    def solve(self, input_data: str) -> int:
+        self.execute_route(input_data)
+        return self.distance_from(0, 0)
+
     def execute_route(self, input_data: str):
-        instructions = input_data.splitlines();
+        instructions = input_data.splitlines()
 
         for instruction in instructions:
             action = instruction[0]
@@ -25,19 +29,18 @@ class Day12:
             self.handle_instruction(action, value)
 
     def distance_from(self, x=0, y=0):
-        return abs(self.position['East'] - self.position['West'])\
+        return abs(self.position['East'] - self.position['West'] - x)\
                + abs(self.position['North'] - self.position['South'] - y)
 
     def get_direction(self, current_direction, rotation, clockwise=True):
         amount = int(rotation / 90)
         return self.directions[(self.directions.index(current_direction) + (amount if clockwise else -amount)) % 4]
 
+    def handle_instruction(self, action, value):
+        raise NotImplementedError
+
 
 class Day12PartA(Day12, FileReaderSolution):
-    def solve(self, input_data: str) -> int:
-        self.execute_route(input_data)
-        return self.distance_from(0, 0)
-
     def handle_instruction(self, action, value):
         if action == 'F':
             self.position[self.direction] += value
@@ -58,10 +61,6 @@ class Day12PartA(Day12, FileReaderSolution):
 
 
 class Day12PartB(Day12, FileReaderSolution):
-    def solve(self, input_data: str) -> int:
-        self.execute_route(input_data)
-        return self.distance_from(0, 0)
-
     def rotate_waypoint(self, degrees, clockwise=True):
         new_waypoint = {}
         for direction in self.directions:
