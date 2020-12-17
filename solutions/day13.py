@@ -44,7 +44,7 @@ class Day13PartB(Day13, FileReaderSolution):
             if busses[pos] == 'x':
                 continue
 
-            integers.append(pos)
+            integers.append(-pos)
             divisors.append(int(busses[pos]))
 
         return self.crt(divisors, integers)
@@ -55,7 +55,7 @@ class Day13PartB(Day13, FileReaderSolution):
 
         for divisor, integer in zip(divisors, integers):
             p = prod // divisor
-            total -= integer * self.mul_inv(p, divisor) * p
+            total += integer * self.mul_inv(p, divisor) * p
 
         return total % prod
 
