@@ -1,6 +1,8 @@
 import importlib
 import sys
 import click
+import timeit
+import tqdm
 
 
 @click.command()
@@ -9,7 +11,8 @@ import click
 @click.option("--partb", "part", flag_value="b")
 @click.option("--parte_a", "part", flag_value="ea")
 @click.option("--parte_b", "part", flag_value="eb")
-def main(day, part):
+@click.option("-t", "--timeit", "timeit_", type=click.INT)
+def main(day, part, timeit_):
     day = f"{int(day):02}"
     import_path = f"solutions.day{day}"
     data_path = f"day{day}.txt"
@@ -20,8 +23,28 @@ def main(day, part):
         print(f"Module {day} is not yet available")
         sys.exit(-65)
 
-    print("Results:")
-    print(run_day(data_path, day, day_module, part))
+    if timeit_:
+        execution_times = []
+        results = ""
+        for _ in tqdm.trange(timeit_):
+            time_prior = timeit.default_timer()
+
+            results = run_day(data_path, day, day_module, part)
+
+            time_after = timeit.default_timer()
+            execution_times.append(time_after - time_prior)
+
+        average_time = sum(execution_times) / len(execution_times)
+
+        print("Results:")
+        print(results)
+        print(
+            f"Average running time: {average_time:.6f} seconds ({timeit_} iterations)"
+        )
+
+    else:
+        print("Results:")
+        print(run_day(data_path, day, day_module, part))
 
 
 def run_day(data_path, day, day_module, part):
