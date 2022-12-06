@@ -4,7 +4,7 @@ from utils.abstract import FileReaderSolution
 class Day06:
     @staticmethod
     def base_solve(s, l):
-        return next(i + l for i in range(0, len(s)) if len(set(s[i:i + l])) == l)
+        return next(i+l for i in range(len(s)) if len(set(s[i:i+l])) == l)
 
 
 class Day06PartA(Day06, FileReaderSolution):
