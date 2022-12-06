@@ -1,11 +1,10 @@
 from utils.abstract import FileReaderSolution
-from collections import OrderedDict
 
 
 class Day06:
     @staticmethod
-    def base_solve(line, length):
-        return line.find(list(filter(lambda x: len(x) == length, ["".join(OrderedDict.fromkeys(line[i:i + length])) for i in range(0, len(line))]))[0]) + length
+    def base_solve(s, l):
+        return next(i + l for i in range(0, len(s)) if len(set(s[i:i + l])) == l)
 
 
 class Day06PartA(Day06, FileReaderSolution):
