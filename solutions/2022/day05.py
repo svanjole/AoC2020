@@ -2,7 +2,7 @@ from utils.abstract import FileReaderSolution
 
 
 class Day05:
-    def solve(self, input_data):
+    def base_solve(self, input_data):
         sections = input_data.split("\n\n")
         config = sections[0].split("\n")
 
