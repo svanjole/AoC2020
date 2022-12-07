@@ -7,18 +7,17 @@ class Day07:
         self.system = {"total": 0, "dirs": {}, "files": {}}
 
     @staticmethod
-    def traverse_and_update_dir(pointer, path, file_size=0):
-        pointer["total"] += file_size
+    def traverse_and_update_dir(p, path, file_size=0):
+        p["total"] += file_size
         for item in path:
-            pointer = pointer["dirs"][item]
-            pointer["total"] += file_size
+            p = p["dirs"][item]
+            p["total"] += file_size
 
-        return pointer
+        return p
 
-    def create(self, path, object_type, object_name, file_size=0):
-        empty_dir = {"total": 0, "dirs": {}, "files": {}}
-        pointer = self.traverse_and_update_dir(self.system, path, file_size)
-        pointer[object_type][object_name] = empty_dir if object_type == "dirs" else file_size
+    def create(self, path, type, name, file_size=0):
+        p = self.traverse_and_update_dir(self.system, path, file_size)
+        p[type][name] = {"total": 0, "dirs": {}, "files": {}} if type == "dirs" else file_size
 
     def parse(self, input_data):
         path = []
