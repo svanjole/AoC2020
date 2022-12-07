@@ -26,7 +26,7 @@ def main(day, year, part, timeit_):
     day = f"{int(day):02}"
     import_path = f"solutions.{year}.day{day}"
     data_path = f"day{day}.txt"
-    print(import_path)
+
     try:
         day_module = importlib.import_module(import_path)
     except ModuleNotFoundError:
