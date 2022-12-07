@@ -3,21 +3,20 @@ import operator
 
 
 class Day07:
-    def __init__(self):
-        self.system = {"total": 0, "dirs": {}, "files": {}}
+    system: {} = {"total": 0, "dirs": {}, "files": {}}
 
     @staticmethod
-    def traverse_and_update_dir(p, path, file_size=0):
-        p["total"] += file_size
+    def traverse_dir_and_update_totals(ptr, path, file_size=0):
+        ptr["total"] += file_size
         for item in path:
-            p = p["dirs"][item]
-            p["total"] += file_size
+            ptr = ptr["dirs"][item]
+            ptr["total"] += file_size
 
-        return p
+        return ptr
 
     def create(self, path, type, name, file_size=0):
-        p = self.traverse_and_update_dir(self.system, path, file_size)
-        p[type][name] = {"total": 0, "dirs": {}, "files": {}} if type == "dirs" else file_size
+        ptr = self.traverse_dir_and_update_totals(self.system, path, file_size)
+        ptr[type][name] = {"total": 0, "dirs": {}, "files": {}} if type == "dirs" else file_size
 
     def parse(self, input_data):
         path = []
@@ -37,12 +36,12 @@ class Day07:
                 case _:
                     self.create(path, "files", command[1], int(command[0]))
 
-    def find_candidates(self, candidates, pointer, size, relate=operator.le):
-        if relate(pointer["total"], size):
-            candidates.append(pointer["total"])
+    def find_candidates(self, candidates, ptr, size, relate=operator.le):
+        if relate(ptr["total"], size):
+            candidates.append(ptr["total"])
 
-        for dir_name in pointer["dirs"]:
-            self.find_candidates(candidates, pointer["dirs"][dir_name], size, relate)
+        for dir_name in ptr["dirs"]:
+            self.find_candidates(candidates, ptr["dirs"][dir_name], size, relate)
 
         return candidates
 
