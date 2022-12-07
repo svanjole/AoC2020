@@ -6,40 +6,37 @@ class Day07:
     def __init__(self):
         self.system = {"total": 0, "dirs": {}, "files": {}}
 
-    def create_dir(self, current_dir, dir_name):
-        pointer = self.system
-        for item in current_dir:
-            pointer = pointer["dirs"][item]
-
-        if dir_name not in pointer:
-            pointer["dirs"][dir_name] = {"total": 0, "dirs": {}, "files": {}}
-
-    def create_file(self, current_dir, file_name, file_size):
-        pointer = self.system
+    @staticmethod
+    def traverse_and_update_dir(pointer, path, file_size=0):
         pointer["total"] += file_size
-
-        for item in current_dir:
+        for item in path:
             pointer = pointer["dirs"][item]
             pointer["total"] += file_size
 
-        pointer["files"][file_name] = file_size
+        return pointer
+
+    def create(self, path, object_type, object_name, file_size=0):
+        empty_dir = {"total": 0, "dirs": {}, "files": {}}
+        pointer = self.traverse_and_update_dir(self.system, path, file_size)
+        pointer[object_type][object_name] = empty_dir if object_type == "dirs" else file_size
 
     def parse(self, input_data):
-        current_dir = []
+        path = []
 
         for line in input_data.split("\n"):
             command = line[2:].split(" ") if line[0] == "$" else line.split(" ")
-            if command[0] == "ls":
-                pass
-            elif command[0] == "cd":
-                if command[1] == "/":
-                    current_dir = []
-                    continue
-                current_dir.pop() if command[1] == ".." else current_dir.append(command[1])
-            elif command[0] == "dir":
-                self.create_dir(current_dir, command[1])
-            else:
-                self.create_file(current_dir, command[1], int(command[0]))
+            match command[0]:
+                case "cd":
+                    if command[1] == "/":
+                        path = []
+                        continue
+                    path.pop() if command[1] == ".." else path.append(command[1])
+                case "dir":
+                    self.create(path, "dirs", command[1])
+                case "ls":
+                    pass
+                case _:
+                    self.create(path, "files", command[1], int(command[0]))
 
     def find_candidates(self, candidates, pointer, size, relate=operator.le):
         if relate(pointer["total"], size):

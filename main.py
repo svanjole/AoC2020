@@ -3,7 +3,6 @@ import sys
 import click
 import timeit
 import tqdm
-from time import sleep
 
 
 @click.command("test")
