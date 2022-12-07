@@ -27,6 +27,9 @@ class Day07:
                 case "ls":
                     pass
                 case "cd":
+                    if command[1] == "/":
+                        path = []
+                        continue
                     path.pop() if command[1] == ".." else path.append(command[1])
                 case "dir":
                     self.create(path, "dirs", command[1])
