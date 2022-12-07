@@ -24,6 +24,8 @@ class Day07:
         for line in input_data.split("\n"):
             command = line[2:].split(" ") if line[0] == "$" else line.split(" ")
             match command[0]:
+                case "ls":
+                    pass
                 case "cd":
                     if command[1] == "/":
                         path = []
@@ -31,8 +33,6 @@ class Day07:
                     path.pop() if command[1] == ".." else path.append(command[1])
                 case "dir":
                     self.create(path, "dirs", command[1])
-                case "ls":
-                    pass
                 case _:
                     self.create(path, "files", command[1], int(command[0]))
 
