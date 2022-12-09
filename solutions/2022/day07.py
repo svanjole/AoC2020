@@ -1,21 +1,17 @@
 from utils.abstract import FileReaderSolution
 import operator
 
-
+ 
 class Day07:
     system: {} = {"total": 0, "dirs": {}, "files": {}}
 
-    @staticmethod
-    def traverse_dir_and_update_totals(ptr, path, file_size=0):
+    def create(self, path, type, name, file_size=0):
+        ptr = self.system
         ptr["total"] += file_size
         for item in path:
             ptr = ptr["dirs"][item]
             ptr["total"] += file_size
 
-        return ptr
-
-    def create(self, path, type, name, file_size=0):
-        ptr = self.traverse_dir_and_update_totals(self.system, path, file_size)
         ptr[type][name] = {"total": 0, "dirs": {}, "files": {}} if type == "dirs" else file_size
 
     def parse(self, input_data):
