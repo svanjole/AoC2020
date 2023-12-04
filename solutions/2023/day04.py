@@ -27,7 +27,7 @@ class Day04PartA(Day04, FileReaderSolution):
 class Day04PartB(Day04, FileReaderSolution):
     def solve(self, input_data: str) -> int:
         cards = self.parse(input_data)
-        amounts = [0 for _ in cards]
+        amounts = [0] * len(cards)
 
         for key, matches in enumerate(cards):
             amounts[key] += 1
