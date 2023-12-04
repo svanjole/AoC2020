@@ -14,7 +14,7 @@ def generate(day, year):
 
 @click.command()
 @click.argument("day", type=click.IntRange(1, 26))
-@click.option("--year", "year", default=2022)
+@click.option("--year", "year", default=2023)
 @click.option("--parta", "part", flag_value="a")
 @click.option("--partb", "part", flag_value="b")
 @click.option("--parte_a", "part", flag_value="ea")
@@ -87,4 +87,5 @@ def run_part(data_path, year, day, day_module, part):
 
 
 if __name__ == "__main__":
+    sys.setrecursionlimit(20000)
     main()

@@ -54,13 +54,13 @@ class Day11:
 
     def play_rounds(self, amount, op, number):
         for _ in range(amount):
-            for (_, monkey) in self.monkeys.items():
+            for monkey in self.monkeys.values():
                 while len(monkey.items) > 0:
                     new_value = op(monkey.inspect(monkey.items.pop(0)), number)
                     recipient_id = monkey.recipients[new_value % monkey.divisor == 0]
                     self.monkeys[recipient_id].items.append(new_value)
 
-        result = [m.items_inspected for (_, m) in self.monkeys.items()]
+        result = [m.items_inspected for m in self.monkeys.values()]
         result.sort()
         return prod(result[-2:])
 
@@ -74,5 +74,5 @@ class Day11PartA(Day11, FileReaderSolution):
 class Day11PartB(Day11, FileReaderSolution):
     def solve(self, input_data: str) -> int:
         self.parse(input_data)
-        return self.play_rounds(10000, mod, lcm(*[m.divisor for (_, m) in self.monkeys.items()]))
+        return self.play_rounds(10000, mod, lcm(*[m.divisor for m in self.monkeys.values()]))
 

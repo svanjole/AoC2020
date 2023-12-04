@@ -4,7 +4,7 @@ import click
 
 @click.command()
 @click.argument("day", type=click.IntRange(1, 26))
-@click.argument("year", type=click.IntRange(2022, 2026), default=2022)
+@click.argument("year", type=click.IntRange(2022, 2026), default=2023)
 def main(day, year):
     day = f"{int(day):02}"
     year = f"{int(year):04}"
